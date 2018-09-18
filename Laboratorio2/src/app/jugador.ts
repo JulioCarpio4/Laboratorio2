@@ -3,7 +3,7 @@ export class Jugador{
     nombre: string;
     jersey: number;
     estatura: number;
-    peso: number;
+    peso: string;
     fec_nacimiento: Date;
     posicionF: string;
     posicionB: string;

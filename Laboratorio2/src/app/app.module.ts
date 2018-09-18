@@ -18,17 +18,20 @@ import { MatTableModule } from '@angular/material/table';
 import { FormularioComponent } from './formulario/formulario.component';
 
 import { RouterModule, Routes } from '@angular/router';
+import { EdicionjugadorComponent } from './edicionjugador/edicionjugador.component';
 
 const appRoutes: Routes = [
 { path: 'formulario', component: FormularioComponent},
-{ path: 'rosteractual', component: RosterComponent}
+{ path: 'rosteractual', component: RosterComponent},
+{ path: 'edicionjugador', component: EdicionjugadorComponent}
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     RosterComponent,
-    FormularioComponent
+    FormularioComponent,
+    EdicionjugadorComponent
   ],
   imports: [
     BrowserModule,

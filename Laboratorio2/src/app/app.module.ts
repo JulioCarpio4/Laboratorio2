@@ -17,6 +17,13 @@ import { RosterComponent } from './roster/roster.component';
 import { MatTableModule } from '@angular/material/table';
 import { FormularioComponent } from './formulario/formulario.component';
 
+import { RouterModule, Routes } from '@angular/router';
+
+const appRoutes: Routes = [
+{ path: 'formulario', component: FormularioComponent},
+{ path: 'rosteractual', component: RosterComponent}
+];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +42,8 @@ import { FormularioComponent } from './formulario/formulario.component';
     MatDatepickerModule,
     MatFormFieldModule, 
     MatInputModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]

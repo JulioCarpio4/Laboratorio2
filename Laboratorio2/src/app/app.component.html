@@ -1,14 +1,3 @@
-<!--
-<mat-toolbar color="primary">
-  Prueba  
-  <div class ="button-row">
-    <button mat-flat-button color="primary">Roster Actual</button>
-    <button mat-flat-button color="primary">Ingresar Jugadores</button>
-    <button mat-flat-button color="primary">Editar Jugadores</button>
-    <button mat-flat-button color="primary">Eliminar Jugadores</button>
-  </div>
-</mat-toolbar>
--->
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #49306B">
   <a class="navbar-brand" href="#">Béisbol para todos</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,11 +6,11 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Roster Actual <span class="sr-only">(current)</span></a>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/rosteractual">Roster Actual</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Agregar Jugadores</a>
+        <a class="nav-link" routerLink="/formulario">Agregar Jugadores</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Editar Jugadores</a>
@@ -37,9 +26,4 @@
   </div>
 </nav>
 
-<app-formulario></app-formulario>
-
-<!--
-<app-roster></app-roster>
--->
-
+<router-outlet></router-outlet>

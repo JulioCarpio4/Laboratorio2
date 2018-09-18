@@ -3,16 +3,14 @@ table {
     margin-left: 5%;
     margin-right: 5%;
 }
-
-h2{
-    margin-left:  5px;
-    padding-left: 55px;
-}
-
 th {
     text-align: center!important;
 }
 
 td {
     text-align: center!important;
+}
+
+nav-item.focus{
+    color: bisque;
 }

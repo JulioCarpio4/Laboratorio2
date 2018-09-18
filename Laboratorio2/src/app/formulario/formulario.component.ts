@@ -32,7 +32,7 @@ export class FormularioComponent implements OnInit {
   "Center Fielder", "Left Fielder", "Receptor", "Lanzador"];
 
   constructor() { 
-
+      console.log("HOLA CONSTRUCTOR!");
   }
 
   ngOnInit() {

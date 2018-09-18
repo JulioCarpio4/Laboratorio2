@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -6,10 +9,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Laboratorio2';
-  isChecked = true;
 
-  onChange($event){
-    console.log($event);
-  }
 }

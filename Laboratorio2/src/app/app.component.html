@@ -1,20 +1,45 @@
 <!--
-<mat-checkbox 
-[value] =""
-checked= "isChecked"
-(change) ="onChange($event)">
- Show Details</mat-checkbox>
+<mat-toolbar color="primary">
+  Prueba  
+  <div class ="button-row">
+    <button mat-flat-button color="primary">Roster Actual</button>
+    <button mat-flat-button color="primary">Ingresar Jugadores</button>
+    <button mat-flat-button color="primary">Editar Jugadores</button>
+    <button mat-flat-button color="primary">Eliminar Jugadores</button>
+  </div>
+</mat-toolbar>
+-->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #49306B">
+  <a class="navbar-brand" href="#">Béisbol para todos</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
- <div>
-    <mat-radio-group>
-        <mat-radio-button value = "1">Prueba Radio Button</mat-radio-button>
-        <mat-radio-button value = "2">Prueba Radio Button 2</mat-radio-button>
-      </mat-radio-group>
- </div>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Roster Actual <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Agregar Jugadores</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Editar Jugadores</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Eliminar Jugadores</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
+<app-formulario></app-formulario>
+
+<!--
+<app-roster></app-roster>
 -->
 
-<mat-toolbar color="primary">
-  Prueba
-</mat-toolbar>
-
- <app-roster></app-roster>

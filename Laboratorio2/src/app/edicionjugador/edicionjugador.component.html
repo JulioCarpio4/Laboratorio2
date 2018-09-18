@@ -5,9 +5,86 @@
     </div>
     <div class="card-body">
       <h5 class="card-title">Seleccione un jugador para editar:</h5>
-      <p class="card-text">
-      Prueba Texto!
-      </p>
+      <div class="card-block">
+        <div class="form-group col-md-4 float-center">
+          <select class="form-control" (change) ="SelectOption($event);">
+              <option>Seleccione un jugador...</option>
+            <option *ngFor="let player of jugadores"
+            [(ngModel)]="selectedValue" name="dropdplayer" ngDefaultControl>{{player.id}} - {{player.name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="container my-3" *ngIf="selectedplayer">     
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="Name1"> <b> Nombre Completo:</b> </label>
+                    <input type="text" class="form-control" id="Name1" placeholder="Nombre Completo" required
+                    [(ngModel)]="newplayer.name" name= "completeName"/>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputName4"> <b>Fecha de Nacimiento:</b></label>
+                    <div class="container">
+                      <mat-form-field>
+                          <input matInput [matDatepicker]= "picker"
+                          name="prueba">
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="Estatura"><b>Estatura (Metros):</b></label>
+                    <input type="number" class="form-control" name="height" placeholder="Estatura" step="0.05" min="0" required
+                    [(ngModel)]="newplayer.altura" name= "alturajugador"/>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Peso"><b>Peso (lbs):</b></label>
+                    <input type="number" class="form-control" name="weight" placeholder="Peso" step="10" min="0" required
+                    [(ngModel)]="newplayer.peso" name= "pesoJugador"/>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Posición"><b>Posición de Juego:</b></label>
+                    <select class="form-control" (change) ="SelectOption($event);"
+                    [(ngModel)]= "ddValor" name ="dropdown">
+                      <option *ngFor="let position of posiciones">{{position}}</option>
+                    </select>
+                </div>
+            </div>
+      
+            <div class="form-row">
+              <div class="form-group col-md-6 text-center">
+                  <label for="Posición"><b>Atrapa:</b></label>
+                  <label class="form-control">
+                      <input type="checkbox" name="AtrapaD" 
+                      [(ngModel)]="isCheckedAD" (change)="checkValueAD(isCheckedAD? 'Derecho' : '')"> Derecho
+                  </label>
+                  <label class="form-control">
+                      <input type="checkbox" name="AtrapaZ" 
+                      [(ngModel)]="isCheckedAZ" (change)="checkValueAZ(isCheckedAZ? 'Zurdo' : '')"> Zurdo
+                  </label>
+              </div>
+              <div class="form-group col-md-6 text-center">
+                  <label for="Bating"><b>Batea:</b></label>
+                  <label class="form-control">
+                      <input type="checkbox" name="BateaD" 
+                      [(ngModel)]="isCheckedBD" (change)="checkValueBD(isCheckedBD? 'Derecho' : '')"> Derecho
+                  </label>
+                  <label class="form-control">
+                      <input type="checkbox"  name="BateaZ" 
+                      [(ngModel)]="isCheckedBZ" (change)="checkValueBZ(isCheckedBZ? 'Zurdo' : '')"> Zurdo
+                  </label>
+                  </div>
+              </div>
+            <div class="btn-toolbar form-row ">
+              <button type="button" class="btn btn-lg" style="padding-left: 20px;"(click)="EliminarJugador();">Eliminar Jugador</button>
+              <button type="button" class="btn btn-lg float-right" (click)="GuardarJugador();">Guardar Jugador</button> 
+            </div>
+        </form>
     </div>
   </div>
 </div>

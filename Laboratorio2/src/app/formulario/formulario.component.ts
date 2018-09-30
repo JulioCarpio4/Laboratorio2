@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { PlayersService } from '../players.service';
 
 @Component({
   selector: 'app-formulario',
@@ -31,7 +32,7 @@ export class FormularioComponent implements OnInit {
   posiciones = ["Primera Base", "Segunda Base", "Tercera Base", "Shortstop", "Right Fielder", 
   "Center Fielder", "Left Fielder", "Receptor", "Lanzador"];
 
-  constructor() { 
+  constructor(private playerService: PlayersService) { 
   }
 
   ngOnInit() {
@@ -93,7 +94,9 @@ export class FormularioComponent implements OnInit {
     }
 
     this.newplayer.id = Math.round(Math.random() * 1000); //Se le genera un nuevo id al nuevo jugador. 
-    localStorage.setItem(String(this.newplayer.id), JSON.stringify(this.newplayer)); //Se almacena el nuevo jugador en el localstorage
+    
+    //Se invoca al servicio que almacena el nuevo jugador. 
+    this.playerService.postJugador(this.newplayer.id, this.newplayer);
 
     this.setearValores(); //Se limpia la variable donde se almacenan los datos del nuevo jugador. 
 

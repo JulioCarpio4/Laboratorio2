@@ -9,8 +9,8 @@
         <div class="form-group col-md-4 float-center">
           <select class="form-control" (change) ="SelectOption($event);">
               <option>Seleccione un jugador...</option>
-            <option *ngFor="let player of jugadores"
-            [(ngModel)]="selectedValue" name="dropdplayer" ngDefaultControl>{{player.id}} - {{player.name}}</option>
+              <option [(ngValue)]="selectedValue" *ngFor="let player of jugadores" 
+            name="dropdplayer" ngDefaultControl>{{player.id}} - {{player.nombre}}</option>
           </select>
         </div>
       </div>
@@ -22,7 +22,7 @@
                 <div class="form-group col-md-6">
                     <label for="Name1"> <b> Nombre Completo:</b> </label>
                     <input type="text" class="form-control" id="Name1" placeholder="Nombre Completo" required
-                    [(ngModel)]="newplayer.name" name= "completeName"/>
+                    [(ngModel)]="lnombre" name= "completeName"/>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputName4"> <b>Fecha de Nacimiento:</b></label>
@@ -40,17 +40,17 @@
                 <div class="form-group col-md-4">
                     <label for="Estatura"><b>Estatura (Metros):</b></label>
                     <input type="number" class="form-control" name="height" placeholder="Estatura" step="0.05" min="0" required
-                    [(ngModel)]="newplayer.altura" name= "alturajugador"/>
+                    [(ngModel)]="lestatura" name= "alturajugador"/>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="Peso"><b>Peso (lbs):</b></label>
                     <input type="number" class="form-control" name="weight" placeholder="Peso" step="10" min="0" required
-                    [(ngModel)]="newplayer.peso" name= "pesoJugador"/>
+                    [(ngModel)]="lpeso" name= "pesoJugador"/>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="Posición"><b>Posición de Juego:</b></label>
                     <select class="form-control" (change) ="SelectOption($event);"
-                    [(ngModel)]= "ddValor" name ="dropdown">
+                    [(ngModel)]= "lposF" name ="dropdown">
                       <option *ngFor="let position of posiciones">{{position}}</option>
                     </select>
                 </div>

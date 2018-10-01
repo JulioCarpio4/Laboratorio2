@@ -8,8 +8,8 @@
             <div class="card-block">
                 <div class="form-group col-md-4 float-center">
                     <select class="form-control" (change)="SelectOption($event);">
-                        <option>Seleccione un jugador...</option>
-                        <option [(ngValue)]="seleccion" *ngFor="let player of jugadores" name="dropdplayer"
+                        <option disabled>Seleccione un jugador...</option>
+                        <option [(ngValue)]= "seleccion" *ngFor="let player of jugadores" name="dropdplayer"
                             ngDefaultControl>{{player.id}} - {{player.nombre}}</option>
                     </select>
                 </div>
@@ -78,13 +78,12 @@
                         </label>
                     </div>
                 </div>
-                <div class="">
-                    <div class="btn-toolbar">
-                        <button type="button" class="btn btn-lg" style="padding-left: 20px;" (click)="EliminarJugador();">Eliminar
-                            Jugador</button>
-                        <button type="button" class="btn btn-lg float-right" (click)="GuardarJugador();">Guardar
-                            Jugador</button>
-                    </div>
+
+                <div class="btn-toolbar my-4 align-right">
+                    <button type="button" class="btn btn-md btn-danger" (click)="EliminarJugador();">Eliminar
+                        Jugador</button>
+                    <button type="button" class=" btn btn-md btn-success" style="margin-left: 10px;" (click)="GuardarJugador();">Guardar
+                        Jugador</button>
                 </div>
             </form>
         </div>

@@ -69,6 +69,8 @@ export class EdicionjugadorComponent implements OnInit {
       this.lpeso = this.selectedvalue.peso
       this.lposB = this.selectedvalue.posicionB;
       this.lposF = this.selectedvalue.posicionF;
+      this.atrapa = this.selectedvalue.posicionF;
+      this.batea = this.selectedvalue.posicionB;
       this.chequeoBat(this.lposB);
     }
   };
@@ -221,12 +223,12 @@ export class EdicionjugadorComponent implements OnInit {
     console.log(this.batea)
   }
 
-  guardarJugador(){
+  GuardarJugador(){
 
     this.selectedvalue.nombre = this.lnombre ;
     this.selectedvalue.estatura = this.lestatura;
     this.selectedvalue.jersey = this.ljersey;
-    this.selectedvalue.fec_nacimiento;
+    this.selectedvalue.fec_nacimiento = this.lfec;
     this.selectedvalue.id = this.lid;
     this.selectedvalue.peso = this.lpeso;
     this.selectedvalue.posicionB = this.batea;
@@ -234,18 +236,21 @@ export class EdicionjugadorComponent implements OnInit {
 
     //Se actualiza el nuevo jugador. 
     this.playerService.postJugador(this.lid, this.selectedvalue)
-    this.selectedplayer = undefined;
     this.seleccion = "Seleccione un jugador...";
+    
+    this.selectedplayer = undefined;
+    alert("Jugador almacenado con éxito!");
   }
 
-  eliminarJugador(){
+  EliminarJugador(){
 
     //Eliminar jugador
     localStorage.removeItem(String(this.lid));
     this.selectedplayer = undefined;
-    this.seleccion = "Seleccione un jugador...";this.selectedplayer = undefined;
     this.seleccion = "Seleccione un jugador...";
-    //"Seleccionar jugador..." nuevamente y ocultar elementos. 
+    this.getJugadores();
+
+    alert("Jugador eliminado con éxito!!");
 
   }
 }

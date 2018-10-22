@@ -5,6 +5,8 @@ export class Jugador{
     estatura: number;
     peso: string;
     fec_nacimiento: Date;
-    posicionF: string;
-    posicionB: string;
+    posicion: string;
+    atrapa: string;
+    batea: string;
+
 }

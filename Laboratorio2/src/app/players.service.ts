@@ -22,13 +22,14 @@ export class PlayersService {
 
       let dummyJugador = new Jugador();
       dummyJugador.id = pivot.id;
-      dummyJugador.jersey = Math.round(Math.random() * 100);
-      dummyJugador.fec_nacimiento = pivot.born_date;
-      dummyJugador.estatura = pivot.altura;
-      dummyJugador.nombre = pivot.name;
+      dummyJugador.jersey = pivot.jersey;
+      dummyJugador.fec_nacimiento = pivot.fec_nacimiento;
+      dummyJugador.estatura = pivot.estatura;
+      dummyJugador.nombre = pivot.nombre;
       dummyJugador.peso = pivot.peso;
-      dummyJugador.posicionB = pivot.batea;
-      dummyJugador.posicionF = pivot.posicion;
+      dummyJugador.batea = pivot.batea;
+      dummyJugador.atrapa = pivot.atrapa;
+      dummyJugador.posicion = pivot.posicion;
 
       Jugadores.push(dummyJugador);
 
@@ -48,13 +49,14 @@ export class PlayersService {
 
     var dummyJugador = new Jugador();
       dummyJugador.id = pivot.id;
-      dummyJugador.jersey = Math.round(Math.random() * 100);
-      dummyJugador.fec_nacimiento = pivot.born_date;
-      dummyJugador.estatura = pivot.altura;
-      dummyJugador.nombre = pivot.name;
+      dummyJugador.jersey = pivot.jersey;
+      dummyJugador.fec_nacimiento = pivot.fec_nacimiento;
+      dummyJugador.estatura = pivot.estatura;
+      dummyJugador.nombre = pivot.nombre;
       dummyJugador.peso = pivot.peso;
-      dummyJugador.posicionB = pivot.batea;
-      dummyJugador.posicionF = pivot.posicion;
+      dummyJugador.batea = pivot.batea;
+      dummyJugador.atrapa = pivot.atrapa;
+      dummyJugador.posicion = pivot.posicion;
 
     return dummyJugador;
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSnackBar } from '@angular/material/snack-bar'; 
 import { Jugador } from '../jugador';
 import { PlayersService } from '../players.service';
 
@@ -15,28 +16,25 @@ export class EdicionjugadorComponent implements OnInit {
   posiciones = ["Primera Base", "Segunda Base", "Tercera Base", "Shortstop", "Right Fielder", 
   "Center Fielder", "Left Fielder", "Receptor", "Lanzador"];
 
+  ValoresAtrapa = ["Derecho", "Zurdo", "Ambidiestro"];
+
   selectedplayer: string; 
   selectedvalue = new Jugador();
-  lnombre: string;
-  lestatura: number;
-  ljersey: number;
-  lfec: Date;
-  lid: number;
-  lpeso: string;
-  lposB: string;
-  lposF: string;
   
-  atrapa: string;
-  batea: string;
-
-  BD: boolean;
-  BZ: boolean;
-  AD: boolean;
-  AZ: boolean;
+  //Variables Locales
+  lid: number;
+  lnombre: string;
+  lfec: Date;
+  lestatura: number;
+  lpeso: string;
+  lposicion: string;
+  ljersey: number;
+  lbatea: string;
+  latrapa: string;
 
   seleccion: string;
 
-  constructor(private playerService: PlayersService) {
+  constructor(private playerService: PlayersService, public snackBar: MatSnackBar) {
     this.inicio();
    }
 
@@ -67,13 +65,21 @@ export class EdicionjugadorComponent implements OnInit {
       this.lfec = this.selectedvalue.fec_nacimiento;
       this.lid = this.selectedvalue.id;
       this.lpeso = this.selectedvalue.peso
-      this.lposB = this.selectedvalue.posicionB;
-      this.lposF = this.selectedvalue.posicionF;
-      this.atrapa = this.selectedvalue.posicionF;
-      this.batea = this.selectedvalue.posicionB;
-      this.chequeoBat(this.lposB);
+      this.lbatea = this.selectedvalue.batea;
+      this.latrapa = this.selectedvalue.atrapa;
+      this.lposicion = this.selectedvalue.posicion;
     }
   };
+
+  
+  CambioAtrapa(event: any){
+    this.latrapa = event.target.value;
+  };
+
+  CambioBatea(event: any){
+    this.lbatea = event.target.value;
+  };
+
 
   inicio(){
     this.selectedvalue.nombre = "";
@@ -82,148 +88,13 @@ export class EdicionjugadorComponent implements OnInit {
     this.selectedvalue.fec_nacimiento = new Date("1900/01/01");
     this.selectedvalue.id = 0;
     this.selectedvalue.peso = "";
-    this.selectedvalue.posicionB = "";
-    this.selectedvalue.posicionF = "";
+    this.selectedvalue.atrapa = "";
+    this.selectedvalue.batea = "";
+    this.selectedvalue.posicion = "";
     
   }
 
-  chequeoBat(valor){
-    if (valor == "Ambidiestro")
-    {
-        this.BD = true;
-        this.BZ = true;
-    }
-
-    else if (valor == "Zurdo")
-    {
-      this.BZ = true;
-      this.BD = false;
-    }
-
-    else 
-    {
-      this.BD = true;
-      this.BZ = false;
-    }
-  }
-
-  checkValueAD(event: any){
-    if (event == "Derecho" )
-    {
-      if(this.atrapa == "Zurdo")
-      {
-        this.atrapa = "Ambidiestro";
-      }
-
-      else if (this.atrapa == "")
-      {
-        this.atrapa = "Derecho"
-      }
-      
-    }
-    else 
-    {
-      if (this.atrapa == "Ambidiestro")
-      {
-        this.atrapa = "Zurdo";
-      }
-      
-      else 
-      {
-        this.atrapa = "";
-      }
-    }
-
-    console.log(this.atrapa)
-  };
-
-  checkValueAZ(event: any){
-    if (event == "Zurdo" )
-    {
-      if(this.atrapa == "Derecho")
-      {
-        this.atrapa = "Ambidiestro";
-      }
-
-      else if (this.atrapa == "")
-      {
-        this.atrapa = "Zurdo"
-      }
-      
-    }
-    else 
-    {
-      if (this.atrapa == "Ambidiestro")
-      {
-        this.atrapa = "Derecho";
-      }
-      else 
-      {
-        this.atrapa = "";
-      }      
-    }
-    console.log(this.atrapa)
-  }
-
-  checkValueBD(event: any){
-    if (event == "Derecho" )
-    {
-      if(this.batea == "Zurdo")
-      {
-        this.batea = "Ambidiestro";
-      }
-
-      else if (this.batea == "")
-      {
-        this.batea = "Derecho"
-      }
-      
-    }
-    else 
-    {
-      if (this.batea == "Ambidiestro")
-      {
-        this.batea = "Zurdo";
-      }
-      
-      else 
-      {
-        this.batea = "";
-      }
-    }
-
-    console.log(this.batea)
-  };
-
-  checkValueBZ(event: any){
-    if (event == "Zurdo" )
-    {
-      if(this.batea == "Derecho")
-      {
-        this.batea = "Ambidiestro";
-      }
-
-      else if (this.batea == "")
-      {
-        this.batea = "Zurdo"
-      }
-      
-    }
-    else 
-    {
-      if (this.batea == "Ambidiestro")
-      {
-        this.batea = "Derecho";
-      }
-      else 
-      {
-        this.batea = "";
-      }      
-    }
-    console.log(this.batea)
-  }
-
-  GuardarJugador(){
+  ActualizarJugador(){
 
     this.selectedvalue.nombre = this.lnombre ;
     this.selectedvalue.estatura = this.lestatura;
@@ -231,15 +102,24 @@ export class EdicionjugadorComponent implements OnInit {
     this.selectedvalue.fec_nacimiento = this.lfec;
     this.selectedvalue.id = this.lid;
     this.selectedvalue.peso = this.lpeso;
-    this.selectedvalue.posicionB = this.batea;
-    this.selectedvalue.posicionF = this.atrapa;
+    this.selectedvalue.batea = this.lbatea;
+    this.selectedvalue.atrapa = this.latrapa;
+    this.selectedvalue.posicion = this.lposicion;
 
     //Se actualiza el nuevo jugador. 
     this.playerService.postJugador(this.lid, this.selectedvalue)
     this.seleccion = "Seleccione un jugador...";
     
     this.selectedplayer = undefined;
-    alert("Jugador almacenado con éxito!");
+
+    this.snackBar.open("Jugador actualizado con éxito", "Cerrar", {
+      duration: 3000,
+      verticalPosition: 'bottom',
+      horizontalPosition: 'right',
+      panelClass: ['green-snackbar']
+    });
+
+    //alert("Jugador almacenado con éxito!");
   }
 
   EliminarJugador(){

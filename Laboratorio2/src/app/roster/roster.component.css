@@ -14,3 +14,15 @@ td {
 nav-item.focus{
     color: bisque;
 }
+
+#bE.hover{
+    color: green;
+}
+
+.mat-button .mat-button-focus-overlay {
+    background-color: green;
+  }
+
+.highlight{
+    background: #e4e9eb
+}

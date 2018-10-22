@@ -6,29 +6,31 @@
         <div class="card-body">
             <h5 class="card-title">Seleccione un jugador para editar:</h5>
             <div class="card-block">
-                <div class="form-group col-md-4 float-center">
-                    <select class="form-control" (change)="SelectOption($event);">
-                        <option disabled>Seleccione un jugador...</option>
-                        <option [(ngValue)]= "seleccion" *ngFor="let player of jugadores" name="dropdplayer"
-                            ngDefaultControl>{{player.id}} - {{player.nombre}}</option>
-                    </select>
-                </div>
+                    <div class="form-group col-md-4 float-center">
+                            <select class="form-control" [(ngModel)]= "seleccion" (change)="SelectOption($event);" name="dropdplayer">
+                                <option [ngValue]="undefined" disabled selected>Seleccione un jugador...</option>
+                                <option *ngFor="let player of jugadores">{{player.id}} - {{player.nombre}}</option>
+                            </select>
+                    </div>
             </div>
         </div>
 
         <div class="container my-3" *ngIf="selectedplayer">
-            <form>
-                <div class="form-row">
+            <form #playerForm="ngForm">
+                <div class="form-row py-sm-3">
                     <div class="form-group col-md-6">
                         <label for="Name1"> <b> Nombre Completo:</b> </label>
                         <input type="text" class="form-control" id="Name1" placeholder="Nombre Completo" required
-                            [(ngModel)]="lnombre" name="completeName" />
+                            [(ngModel)]="lnombre" name="completeName" #name="ngModel" />
+                        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                            El nombre completo es requerido
+                        </div>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputName4"> <b>Fecha de Nacimiento:</b></label>
                         <div class="container">
-                            <mat-form-field>
-                                <input matInput [matDatepicker]="picker" [(ngModel)]="lfec" name="prueba">
+                            <mat-form-field id="I2">
+                                <input id="I3" matInput [matDatepicker]="picker" [(ngModel)]="lfec" name="bornDate">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                             </mat-form-field>
@@ -39,50 +41,60 @@
                     <div class="form-group col-md-4">
                         <label for="Estatura"><b>Estatura (Metros):</b></label>
                         <input type="number" class="form-control" name="height" placeholder="Estatura" step="0.05" min="0"
-                            required [(ngModel)]="lestatura" name="alturajugador" />
+                            required [(ngModel)]="lestatura" name="alturajugador" #estat="ngModel" />
+                        <div [hidden]="estat.valid || estat.pristine" class="alert alert-danger">
+                            La estatura del jugador es requerida
+                        </div>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="Peso"><b>Peso (lbs):</b></label>
                         <input type="number" class="form-control" name="weight" placeholder="Peso" step="10" min="0"
-                            required [(ngModel)]="lpeso" name="pesoJugador" />
+                            required [(ngModel)]="lpeso" name="pesoJugador" #pes="ngModel" />
+                        <div [hidden]="pes.valid || pes.pristine" class="alert alert-danger">
+                            El peso del jugador es requerido
+                        </div>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="Posición"><b>Posición de Juego:</b></label>
-                        <select class="form-control" (change)="SelectOption($event);" [(ngModel)]="lposF" name="dropdown">
+                        <select class="form-control" (change)="SelectOption($event);" required [(ngModel)]="lposicion"
+                            name="dropdown">
+                            <option [ngValue]="undefined" disabled>Posición de Juego</option>
                             <option *ngFor="let position of posiciones">{{position}}</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group col-md-6 text-center">
-                        <label for="Posición"><b>Atrapa:</b></label>
-                        <label class="form-control">
-                            <input type="checkbox" name="AtrapaD" [checked]="AD" (change)="checkValueAD(isCheckedAD? 'Derecho' : '')">
-                            Derecho
-                        </label>
-                        <label class="form-control">
-                            <input type="checkbox" name="AtrapaZ" [checked]="AZ" (change)="checkValueAZ(isCheckedAZ? 'Zurdo' : '')">
-                            Zurdo
-                        </label>
+                    <div class="form-group col-md-4">
+                        <label for="Atrapa"><b>Atrapa:</b></label>
+                        <select class="form-control" (change)="CambioAtrapa($event);" required [(ngModel)]="latrapa"
+                            name="dropdownA">
+                            <option [ngValue]="undefined" disabled>Atrapa</option>
+                            <option *ngFor="let v_atrapa of ValoresAtrapa">{{v_atrapa}}</option>
+                        </select>
                     </div>
-                    <div class="form-group col-md-6 text-center">
-                        <label for="Bating"><b>Batea:</b></label>
-                        <label class="form-control">
-                            <input type="checkbox" name="BateaD" [checked]="BD" (change)="checkValueBD(isCheckedBD? 'Derecho' : '')">
-                            Derecho
-                        </label>
-                        <label class="form-control">
-                            <input type="checkbox" name="BateaZ" [checked]="BZ" (change)="checkValueBZ(isCheckedBZ? 'Zurdo' : '')">
-                            Zurdo
-                        </label>
+
+                    <div class="form-group col-md-4">
+                        <label for="Batea"><b>Batea:</b></label>
+                        <select class="form-control" (change)="CambioBatea($event);" required [(ngModel)]="lbatea"
+                            name="dropdownB">
+                            <option [ngValue]="undefined" disabled>Batea</option>
+                            <option *ngFor="let v_atrapa of ValoresAtrapa">{{v_atrapa}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="Jersey"><b>No. Jersey:</b></label>
+                        <input type="number" class="form-control" name="height" placeholder="Jersey" step="1" min="0"
+                            max="99" required [(ngModel)]="ljersey" name="jerseyjugador" #jers="ngModel" />
+                        <div [hidden]="jers.valid || jers.pristine" class="alert alert-danger">
+                            El No. de Jersey del jugador es requerido
+                        </div>
                     </div>
                 </div>
 
-                <div class="btn-toolbar my-4 align-right">
-                    <button type="button" class="btn btn-md btn-danger" (click)="EliminarJugador();">Eliminar
-                        Jugador</button>
-                    <button type="button" class=" btn btn-md btn-success" style="margin-left: 10px;" (click)="GuardarJugador();">Guardar
+                <div class="form-row float-right">
+                    <button type="button" class="btn btn-lg float-right" [disabled]="!playerForm.form.valid" (click)="ActualizarJugador(); playerForm.reset()">Actualizar
                         Jugador</button>
                 </div>
             </form>

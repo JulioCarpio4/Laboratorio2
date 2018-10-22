@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, Validators } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { PlayersService } from '../players.service';
+import { MatSnackBar } from '@angular/material/snack-bar'; 
 
 @Component({
   selector: 'app-formulario',
@@ -12,27 +13,25 @@ export class FormularioComponent implements OnInit {
 
   newplayer = {
     id: -1, 
-    name: "", 
-    born_date: "", 
-    altura: null,
+    nombre: "", 
+    fec_nacimiento: "", 
+    estatura: null,
     peso: null,
     posicion: "",
     atrapa: "", 
-    batea: ""
+    batea: "",
+    jersey: undefined
 
   };
-
-  isCheckedBZ = false;
-  isCheckedBD = false;
-  isCheckedAD = false;
-  isCheckedAZ = false;
 
   ddvalor = "";
 
   posiciones = ["Primera Base", "Segunda Base", "Tercera Base", "Shortstop", "Right Fielder", 
   "Center Fielder", "Left Fielder", "Receptor", "Lanzador"];
 
-  constructor(private playerService: PlayersService) { 
+  ValoresAtrapa = ["Derecho", "Zurdo", "Ambidiestro"];
+
+  constructor(private playerService: PlayersService, public snackBar: MatSnackBar) { 
   }
 
   ngOnInit() {
@@ -41,185 +40,43 @@ export class FormularioComponent implements OnInit {
 
   setearValores(){
     this.newplayer.id = -1;
-    this.newplayer.name = "";
-    this.newplayer.born_date = "";
-    this.newplayer.altura = null;
+    this.newplayer.nombre = "";
+    this.newplayer.fec_nacimiento = "";
+    this.newplayer.estatura = null;
     this.newplayer.peso = null;
     this.newplayer.posicion = "";
     this.newplayer.atrapa = "";
     this.newplayer.batea = "";
-    this.isCheckedBZ = false;
-    this.isCheckedBD = false;
-    this.isCheckedAZ = false;
-    this.isCheckedAD = false;
     this.ddvalor = "";
 
   }
 
   GuardarJugador(){
-    if (this.newplayer.name == "")
-    {
-      alert("Por favor, llenar el nombre del jugador!");
-      return;
-    }
-    if (this.newplayer.born_date == "")
-    {
-      alert("Por favor, selecciona la fecha de nacimiento del jugador!");
-      return;
-    }
-    if (this.newplayer.altura == "")
-    {
-      alert("Por favor, llenar la altura del jugador!");
-      return;
-    }
-    if (this.newplayer.peso == "")
-    {
-      alert("Por favor, llenar el peso del jugador!");
-      return;
-    }
-    if (this.newplayer.posicion == "")
-    {
-      alert("Por favor, llenar la posición del jugador!");
-      return;
-    }
-    if (this.newplayer.atrapa == "")
-    {
-      alert("Por favor, llenar la forma de fieldeo del jugador!");
-      return;
-    }
-    if (this.newplayer.atrapa == "")
-    {
-      alert("Por favor, llenar la forma de bateo del jugador!");
-      return;
-    }
-
-    this.newplayer.id = Math.round(Math.random() * 1000); //Se le genera un nuevo id al nuevo jugador. 
+    this.newplayer.id = Math.round(Math.random() * 10000); //Se le genera un nuevo id al nuevo jugador. 
     
     //Se invoca al servicio que almacena el nuevo jugador. 
     this.playerService.postJugador(this.newplayer.id, this.newplayer);
 
-    this.setearValores(); //Se limpia la variable donde se almacenan los datos del nuevo jugador. 
+    //this.setearValores(); //Se limpia la variable donde se almacenan los datos del nuevo jugador. 
 
-    alert("Jugador almacenado con éxito!");
+    this.snackBar.open("Jugador Almacenado con éxito", "Cerrar", {
+      duration: 3000,
+      verticalPosition: 'bottom',
+      horizontalPosition: 'right',
+      panelClass: ['green-snackbar']
+    });
+    //alert("Jugador almacenado con éxito!");
   }
 
   SelectOption(event: any){
     this.newplayer.posicion = event.target.value;
   };
 
-  checkValueAD(event: any){
-    if (event == "Derecho" )
-    {
-      if(this.newplayer.atrapa == "Zurdo")
-      {
-        this.newplayer.atrapa = "Ambidiestro";
-      }
-
-      else if (this.newplayer.atrapa == "")
-      {
-        this.newplayer.atrapa = "Derecho"
-      }
-      
-    }
-    else 
-    {
-      if (this.newplayer.atrapa == "Ambidiestro")
-      {
-        this.newplayer.atrapa = "Zurdo";
-      }
-      
-      else 
-      {
-        this.newplayer.atrapa = "";
-      }
-    }
-
-    console.log(this.newplayer.atrapa)
+  CambioAtrapa(event: any){
+    this.newplayer.atrapa = event.target.value;
   };
 
-  checkValueAZ(event: any){
-    if (event == "Zurdo" )
-    {
-      if(this.newplayer.atrapa == "Derecho")
-      {
-        this.newplayer.atrapa = "Ambidiestro";
-      }
-
-      else if (this.newplayer.atrapa == "")
-      {
-        this.newplayer.atrapa = "Zurdo"
-      }
-      
-    }
-    else 
-    {
-      if (this.newplayer.atrapa == "Ambidiestro")
-      {
-        this.newplayer.atrapa = "Derecho";
-      }
-      else 
-      {
-        this.newplayer.atrapa = "";
-      }      
-    }
-    console.log(this.newplayer.atrapa)
-  }
-
-  checkValueBD(event: any){
-    if (event == "Derecho" )
-    {
-      if(this.newplayer.batea == "Zurdo")
-      {
-        this.newplayer.batea = "Ambidiestro";
-      }
-
-      else if (this.newplayer.batea == "")
-      {
-        this.newplayer.batea = "Derecho"
-      }
-      
-    }
-    else 
-    {
-      if (this.newplayer.batea == "Ambidiestro")
-      {
-        this.newplayer.batea = "Zurdo";
-      }
-      
-      else 
-      {
-        this.newplayer.batea = "";
-      }
-    }
-
-    console.log(this.newplayer.batea)
+  CambioBatea(event: any){
+    this.newplayer.batea = event.target.value;
   };
-
-  checkValueBZ(event: any){
-    if (event == "Zurdo" )
-    {
-      if(this.newplayer.batea == "Derecho")
-      {
-        this.newplayer.batea = "Ambidiestro";
-      }
-
-      else if (this.newplayer.batea == "")
-      {
-        this.newplayer.batea = "Zurdo"
-      }
-      
-    }
-    else 
-    {
-      if (this.newplayer.batea == "Ambidiestro")
-      {
-        this.newplayer.batea = "Derecho";
-      }
-      else 
-      {
-        this.newplayer.batea = "";
-      }      
-    }
-    console.log(this.newplayer.batea)
-  }
 }

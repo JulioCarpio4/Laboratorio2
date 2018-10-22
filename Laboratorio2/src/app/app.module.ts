@@ -11,6 +11,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material';
 import { MatInputModule } from '@angular/material';
 import { MatNativeDateModule } from '@angular/material';
+import { MatSnackBarModule } from '@angular/material/snack-bar'; 
 
 import { AppComponent } from './app.component';
 import { RosterComponent } from './roster/roster.component';
@@ -42,6 +43,7 @@ const appRoutes: Routes = [
     MatTableModule,
     MatToolbarModule,
     MatButtonModule,
+    MatSnackBarModule,
     MatDatepickerModule,
     MatFormFieldModule, 
     MatInputModule,

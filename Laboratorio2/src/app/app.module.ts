@@ -24,7 +24,9 @@ import { EdicionjugadorComponent } from './edicionjugador/edicionjugador.compone
 const appRoutes: Routes = [
 { path: 'formulario', component: FormularioComponent},
 { path: 'rosteractual', component: RosterComponent},
-{ path: 'edicionjugador', component: EdicionjugadorComponent}
+{ path: 'edicionjugador', component: EdicionjugadorComponent},
+{ path: 'edicionjugador/:id', component: EdicionjugadorComponent}
+
 ];
 
 @NgModule({

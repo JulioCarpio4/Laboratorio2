@@ -59,7 +59,7 @@
       <th mat-cell *matCellDef="let row" >
 
         <div class="button-row">
-            <button id="bE" mat-button color="primary">Editar</button> 
+            <button id="bE" mat-button color="primary" (click)="EditarJugador(row.id);">Editar</button> 
             <button mat-button color="warn" (click)="EliminarJugador(row.id); renderRows();" >Eliminar</button>
         </div>
       </th>

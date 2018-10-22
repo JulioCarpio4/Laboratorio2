@@ -6,6 +6,8 @@ import { Jugador } from '../jugador';
 import { PlayersService } from '../players.service'
 import { MatSnackBar } from '@angular/material/snack-bar'; 
 
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-roster',
   templateUrl: './roster.component.html',
@@ -20,7 +22,7 @@ export class RosterComponent implements OnInit {
 
   selectedRowIndex: number = -1;
 
-  constructor(private playerService: PlayersService, public snackBar: MatSnackBar) {
+  constructor(private playerService: PlayersService, public snackBar: MatSnackBar, private router: Router) {
   }
 
   ngOnInit() {
@@ -48,6 +50,10 @@ export class RosterComponent implements OnInit {
       horizontalPosition: 'right',
       panelClass: ['green-snackbar']
     });
+  }
+
+  EditarJugador(lid){
+    this.router.navigate(['/edicionjugador', lid]);
   }
 
   highlight(row){

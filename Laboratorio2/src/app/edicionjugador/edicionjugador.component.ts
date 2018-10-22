@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatSnackBar } from '@angular/material/snack-bar'; 
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Jugador } from '../jugador';
 import { PlayersService } from '../players.service';
+
+import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edicionjugador',
@@ -13,14 +16,18 @@ import { PlayersService } from '../players.service';
 export class EdicionjugadorComponent implements OnInit {
 
   jugadores: Jugador[];
-  posiciones = ["Primera Base", "Segunda Base", "Tercera Base", "Shortstop", "Right Fielder", 
-  "Center Fielder", "Left Fielder", "Receptor", "Lanzador"];
+  posiciones = ["Primera Base", "Segunda Base", "Tercera Base", "Shortstop", "Right Fielder",
+    "Center Fielder", "Left Fielder", "Receptor", "Lanzador"];
 
   ValoresAtrapa = ["Derecho", "Zurdo", "Ambidiestro"];
 
-  selectedplayer: string; 
+  selectedplayer: string;
   selectedvalue = new Jugador();
-  
+
+  parametro: any;
+  lpar: number;
+  hayParam: boolean;
+
   //Variables Locales
   lid: number;
   lnombre: string;
@@ -34,31 +41,43 @@ export class EdicionjugadorComponent implements OnInit {
 
   seleccion: string;
 
-  constructor(private playerService: PlayersService, public snackBar: MatSnackBar) {
+  constructor(private playerService: PlayersService, public snackBar: MatSnackBar, private route: ActivatedRoute, private router: Router) {
     this.inicio();
-   }
+  }
 
   ngOnInit() {
     this.getJugadores();
-    
+
+    this.parametro = this.route.params.subscribe(params => {
+      this.lpar = params['id'];
+    });
+   
+   if (this.lpar != undefined)
+   {
+     this.hayParam = true;
+     this.ParamPlayer(this.lpar);
+   }
+   else
+   {
+     this.hayParam = false;
+   }
+
   }
 
-  getJugadores(): void{
+  getJugadores(): void {
     this.jugadores = this.playerService.getJugadores();
   }
 
-  SelectOption(event: any){
-    
-    if (event.target.value == "Seleccione un jugador...")
-    {
+  SelectOption(event: any) {
+
+    if (event.target.value == "Seleccione un jugador...") {
       this.selectedplayer = undefined;
     }
-    else
-    {
+    else {
       this.selectedplayer = "Sí";
       let option = String(event.target.value).split('-');
       this.selectedvalue = this.playerService.getJugador(Number(option[0]));
-      
+
       this.lnombre = this.selectedvalue.nombre;
       this.lestatura = this.selectedvalue.estatura;
       this.ljersey = this.selectedvalue.jersey;
@@ -71,17 +90,17 @@ export class EdicionjugadorComponent implements OnInit {
     }
   };
 
-  
-  CambioAtrapa(event: any){
+
+  CambioAtrapa(event: any) {
     this.latrapa = event.target.value;
   };
 
-  CambioBatea(event: any){
+  CambioBatea(event: any) {
     this.lbatea = event.target.value;
   };
 
 
-  inicio(){
+  inicio() {
     this.selectedvalue.nombre = "";
     this.selectedvalue.estatura = 0;
     this.selectedvalue.jersey = 0;
@@ -91,12 +110,12 @@ export class EdicionjugadorComponent implements OnInit {
     this.selectedvalue.atrapa = "";
     this.selectedvalue.batea = "";
     this.selectedvalue.posicion = "";
-    
+
   }
 
-  ActualizarJugador(){
+  ActualizarJugador() {
 
-    this.selectedvalue.nombre = this.lnombre ;
+    this.selectedvalue.nombre = this.lnombre;
     this.selectedvalue.estatura = this.lestatura;
     this.selectedvalue.jersey = this.ljersey;
     this.selectedvalue.fec_nacimiento = this.lfec;
@@ -109,7 +128,7 @@ export class EdicionjugadorComponent implements OnInit {
     //Se actualiza el nuevo jugador. 
     this.playerService.postJugador(this.lid, this.selectedvalue)
     this.seleccion = "Seleccione un jugador...";
-    
+
     this.selectedplayer = undefined;
 
     this.snackBar.open("Jugador actualizado con éxito", "Cerrar", {
@@ -119,10 +138,13 @@ export class EdicionjugadorComponent implements OnInit {
       panelClass: ['green-snackbar']
     });
 
-    //alert("Jugador almacenado con éxito!");
+    if (this.hayParam)
+    {
+      this.router.navigate(['/rosteractual']);
+    }
   }
 
-  EliminarJugador(){
+  EliminarJugador() {
 
     //Eliminar jugador
     localStorage.removeItem(String(this.lid));
@@ -131,6 +153,24 @@ export class EdicionjugadorComponent implements OnInit {
     this.getJugadores();
 
     alert("Jugador eliminado con éxito!!");
+
+  }
+
+  ParamPlayer(lid) {
+    this.selectedplayer = "Sí";
+    //let option = String(event.target.value).split('-');
+    this.selectedvalue = this.playerService.getJugador(Number(lid));
+    this.lnombre = this.selectedvalue.nombre;
+    this.lestatura = this.selectedvalue.estatura;
+    this.ljersey = this.selectedvalue.jersey;
+    this.lfec = this.selectedvalue.fec_nacimiento;
+    this.lid = this.selectedvalue.id;
+    this.lpeso = this.selectedvalue.peso
+    this.lbatea = this.selectedvalue.batea;
+    this.latrapa = this.selectedvalue.atrapa;
+    this.lposicion = this.selectedvalue.posicion;
+
+    this.seleccion = this.lid + " - " + this.lnombre;
 
   }
 }

@@ -51,21 +51,57 @@ export class EdicionjugadorComponent implements OnInit {
     this.parametro = this.route.params.subscribe(params => {
       this.lpar = params['id'];
     });
-   
-   if (this.lpar != undefined)
-   {
-     this.hayParam = true;
-     this.ParamPlayer(this.lpar);
-   }
-   else
-   {
-     this.hayParam = false;
-   }
+
+    if (this.lpar != undefined) {
+      this.hayParam = true;
+      this.ParamPlayer(this.lpar);
+    }
+    else {
+      this.hayParam = false;
+    }
 
   }
 
   getJugadores(): void {
-    this.jugadores = this.playerService.getJugadores();
+    this.playerService.obtenerJugadores()
+      .then(
+        (recibidos) => {
+          var self = this;
+
+          console.log(self.jugadores);
+
+          var cadena;
+          var listado = [];
+          cadena = recibidos;
+
+
+          var i = cadena.data.length;
+          while (i--) {
+            let temporal: string;
+            let pivot;
+            temporal = cadena.data[i];
+            pivot = temporal;
+
+            let dummyJugador = new Jugador();
+            dummyJugador.id = pivot.id;
+            dummyJugador.jersey = pivot.jersey;
+            dummyJugador.fec_nacimiento = pivot.fec_nacimiento;
+            dummyJugador.estatura = pivot.estatura;
+            dummyJugador.nombre = pivot.nombre;
+            dummyJugador.peso = pivot.peso;
+            dummyJugador.batea = pivot.batea;
+            dummyJugador.atrapa = pivot.atrapa;
+            dummyJugador.posicion = pivot.posicion;
+
+            listado.push(dummyJugador);
+
+          }
+          self.jugadores = listado;
+          self.jugadores = listado;
+        })
+      .catch(function (error) {
+        console.log(error.message);
+      })
   }
 
   SelectOption(event: any) {
@@ -76,17 +112,42 @@ export class EdicionjugadorComponent implements OnInit {
     else {
       this.selectedplayer = "Sí";
       let option = String(event.target.value).split('-');
-      this.selectedvalue = this.playerService.getJugador(Number(option[0]));
 
-      this.lnombre = this.selectedvalue.nombre;
-      this.lestatura = this.selectedvalue.estatura;
-      this.ljersey = this.selectedvalue.jersey;
-      this.lfec = this.selectedvalue.fec_nacimiento;
-      this.lid = this.selectedvalue.id;
-      this.lpeso = this.selectedvalue.peso
-      this.lbatea = this.selectedvalue.batea;
-      this.latrapa = this.selectedvalue.atrapa;
-      this.lposicion = this.selectedvalue.posicion;
+      //this.selectedvalue = this.playerService.getJugador(Number(option[0]));
+      this.playerService.obtenerJugador(Number(option[0]))
+        .then((recibido) => {
+          var self = this;
+          var returnedPlayer;
+          var datos;
+
+          returnedPlayer = recibido;
+          datos = returnedPlayer.data;
+
+
+          self.selectedvalue.nombre = datos.nombre;
+          self.selectedvalue.estatura = datos.estatura;
+          self.selectedvalue.jersey = datos.jersey;
+          self.selectedvalue.fec_nacimiento = datos.fec_nacimiento;
+          self.selectedvalue.id = datos.id;
+          self.selectedvalue.peso = datos.peso;
+          self.selectedvalue.batea = datos.batea;
+          self.selectedvalue.atrapa = datos.atrapa;
+          self.selectedvalue.posicion = datos.posicion;
+
+          self.lnombre = datos.nombre;
+          self.lestatura = datos.estatura;
+          self.ljersey = datos.jersey;
+          self.lfec = datos.fec_nacimiento;
+          self.lid = datos.id;
+          self.lpeso = datos.peso
+          self.lbatea = datos.batea;
+          self.latrapa = datos.atrapa;
+          self.lposicion = datos.posicion;
+
+        })
+        .catch(function (error) {
+          console.log(error.message);
+        })
     }
   };
 
@@ -126,22 +187,39 @@ export class EdicionjugadorComponent implements OnInit {
     this.selectedvalue.posicion = this.lposicion;
 
     //Se actualiza el nuevo jugador. 
-    this.playerService.postJugador(this.lid, this.selectedvalue)
-    this.seleccion = "Seleccione un jugador...";
+    //this.playerService.postJugador(this.lid, this.selectedvalue)
+    this.playerService.actualizarJugador(this.lid, this.selectedvalue)
+      .then((resultado) => {
+        var self = this;
+        self.seleccion = "Seleccione un jugador...";
 
-    this.selectedplayer = undefined;
+        self.selectedplayer = undefined;
 
-    this.snackBar.open("Jugador actualizado con éxito", "Cerrar", {
-      duration: 3000,
-      verticalPosition: 'bottom',
-      horizontalPosition: 'right',
-      panelClass: ['green-snackbar']
-    });
 
-    if (this.hayParam)
-    {
-      this.router.navigate(['/rosteractual']);
-    }
+        self.snackBar.open("Jugador actualizado con éxito", "Cerrar", {
+          duration: 4000,
+          verticalPosition: 'bottom',
+          horizontalPosition: 'right',
+          panelClass: ['green-snackbar']
+        });
+
+        if (self.hayParam) {
+          self.router.navigate(['/rosteractual']);
+        }
+
+      })
+      .catch((error) => {
+        var self = this;
+
+        self.snackBar.open("No se pudo actualizar los datos del jugador, " + error, "Cerrar", {
+          duration: 4000,
+          verticalPosition: 'bottom',
+          horizontalPosition: 'right',
+          panelClass: ['red-snackbar']
+        });
+      })
+
+
   }
 
   EliminarJugador() {
@@ -159,18 +237,33 @@ export class EdicionjugadorComponent implements OnInit {
   ParamPlayer(lid) {
     this.selectedplayer = "Sí";
     //let option = String(event.target.value).split('-');
-    this.selectedvalue = this.playerService.getJugador(Number(lid));
-    this.lnombre = this.selectedvalue.nombre;
-    this.lestatura = this.selectedvalue.estatura;
-    this.ljersey = this.selectedvalue.jersey;
-    this.lfec = this.selectedvalue.fec_nacimiento;
-    this.lid = this.selectedvalue.id;
-    this.lpeso = this.selectedvalue.peso
-    this.lbatea = this.selectedvalue.batea;
-    this.latrapa = this.selectedvalue.atrapa;
-    this.lposicion = this.selectedvalue.posicion;
 
-    this.seleccion = this.lid + " - " + this.lnombre;
+    //this.selectedvalue = this.playerService.getJugador(Number(lid));
+    this.playerService.obtenerJugador(lid)
+      .then((recibido) => {
+        var self = this;
+        var returnedPlayer;
+        var datos;
+
+        returnedPlayer = recibido;
+        datos = returnedPlayer.data;
+
+        self.lnombre = datos.nombre;
+        self.lestatura = datos.estatura;
+        self.ljersey = datos.jersey;
+        self.lfec = datos.fec_nacimiento;
+        self.lid = datos.id;
+        self.lpeso = datos.peso
+        self.lbatea = datos.batea;
+        self.latrapa = datos.atrapa;
+        self.lposicion = datos.posicion;
+
+        self.seleccion = self.lid + " - " + self.lnombre;
+
+      })
+      .catch(function (error) {
+        console.log(error.message);
+      })
 
   }
 }

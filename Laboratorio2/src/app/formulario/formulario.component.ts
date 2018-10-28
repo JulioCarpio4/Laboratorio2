@@ -54,18 +54,31 @@ export class FormularioComponent implements OnInit {
   GuardarJugador(){
     this.newplayer.id = Math.round(Math.random() * 10000); //Se le genera un nuevo id al nuevo jugador. 
     
+    console.log(this.newplayer.nombre);
+
     //Se invoca al servicio que almacena el nuevo jugador. 
-    this.playerService.postJugador(this.newplayer.id, this.newplayer);
-
-    //this.setearValores(); //Se limpia la variable donde se almacenan los datos del nuevo jugador. 
-
-    this.snackBar.open("Jugador Almacenado con éxito", "Cerrar", {
-      duration: 3000,
-      verticalPosition: 'bottom',
-      horizontalPosition: 'right',
-      panelClass: ['green-snackbar']
-    });
-    //alert("Jugador almacenado con éxito!");
+    this.playerService.insertarJugador(this.newplayer.id, this.newplayer)
+    .then((insertado) => {
+      var self = this;
+      
+      self.snackBar.open("Jugador Almacenado con éxito", "Cerrar", {
+        duration: 4000,
+        verticalPosition: 'bottom',
+        horizontalPosition: 'right',
+        panelClass: ['green-snackbar']
+      });
+    })
+    .catch(
+      (error) => {
+        var self = this; 
+        self.snackBar.open("No se pudo almacenar el nuevo jugador. Ha ocurrido un error", "Cerrar", {
+          duration: 4000,
+          verticalPosition: 'bottom',
+          horizontalPosition: 'right',
+          panelClass: ['red-snackbar']
+        });
+      }
+    )
   }
 
   SelectOption(event: any){

@@ -21,3 +21,8 @@ body {
     background-color: green;
     color: white;
 }
+
+.red-snackbar{
+  background-color: red;
+  color: white;
+}

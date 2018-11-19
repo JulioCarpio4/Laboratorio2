@@ -1,4 +1,4 @@
-# Laboratorio2
+# Frontend para el curso de Programación Web 
 
 Este repositorio consiste en un ejemplo de frontend desarrollado en Angular 6 para el manejo y la gestión de información de jugadores de un equipo de béisbol. 
 

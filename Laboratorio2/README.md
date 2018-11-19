@@ -1,27 +1,40 @@
 # Laboratorio2
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.1.
+Este repositorio consiste en un ejemplo de frontend desarrollado en Angular 6 para el manejo y la gestión de información de jugadores de un equipo de béisbol. 
 
-## Development server
+## Servidor de Desarrollo
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Para propósitos de desarrollo, necesitarás tener instalado node.js y el último cliente de angular. Aquí podrás encontrar una guía con los pasos para poder ejecutar el proyecto. 
 
-## Code scaffolding
+### Instalación de Node
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+[Node] Puedes dirigirte al siguiente link para la instalación de node http://nodejs.org/.
+Al finalizar la instalación, podrás correr los siguientes comandos para comprobar que la instalación se realizó de manera correcta. 
 
-## Build
+    $ node --version
+    v0.10.24
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+    $ npm --version
+    1.3.21
 
-## Running unit tests
+### Clonar el repositorio
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Puedes utilizar el siguiente comando para clonar este repositorio.
 
-## Running end-to-end tests
+```shell
+git clone https://github.com/bryanforbes/intern-angular
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+### Instalación de dependencias con npm
 
-## Further help
+Install the `npm` packages described in the `package.json` and verify that it works:
+Debes instalar los paquetes `npm` descritos en el archivo `package.json` 
+```shell
+npm install
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Una vez tengas instalado node.js, el cliente de angular, y las dependencias del proyecto (npm), podrás ejecutar el comando `ng serve --open` y luego navegar en tu browser a la ruta `http://localhost:4200`. La aplicación se actualizará automáticamente cada vez que realices una actualización en los archivos del código fuente. 
+
+## Realizar build para producción
+
+Cuando hayas finalizado de realizar tus cambios, y quieras realizar un build para colocar en producción, puedes ejecutar el comando `ng build --prod`. 

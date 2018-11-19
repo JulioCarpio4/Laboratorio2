@@ -22,7 +22,7 @@ Al finalizar la instalación, podrás correr los siguientes comandos para compro
 Puedes utilizar el siguiente comando para clonar este repositorio.
 
 ```shell
-git clone https://github.com/bryanforbes/intern-angular
+git clone https://github.com/JulioCarpio4/Laboratorio2
 ```
 
 ### Instalación de dependencias con npm

@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material';
 import { MatInputModule } from '@angular/material';
 import { MatNativeDateModule } from '@angular/material';
 import { MatSnackBarModule } from '@angular/material/snack-bar'; 
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 import { AppComponent } from './app.component';
 import { RosterComponent } from './roster/roster.component';
@@ -50,6 +51,7 @@ const appRoutes: Routes = [
     MatFormFieldModule, 
     MatInputModule,
     MatNativeDateModule,
+    MatProgressBarModule, 
     RouterModule.forRoot(appRoutes)
   ],
   providers: [],

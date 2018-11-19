@@ -41,11 +41,15 @@ export class EdicionjugadorComponent implements OnInit {
 
   seleccion: string;
 
+  enviando: boolean;
+
   constructor(private playerService: PlayersService, public snackBar: MatSnackBar, private route: ActivatedRoute, private router: Router) {
     this.inicio();
+    this.enviando = true;
   }
 
   ngOnInit() {
+    this.enviando = true;
     this.getJugadores();
 
     this.parametro = this.route.params.subscribe(params => {
@@ -94,13 +98,23 @@ export class EdicionjugadorComponent implements OnInit {
             dummyJugador.posicion = pivot.posicion;
 
             listado.push(dummyJugador);
-
+           
           }
           self.jugadores = listado;
           self.jugadores = listado;
+          self.enviando = false;
         })
-      .catch(function (error) {
+      .catch((error) => {
+        
+        var self = this;
         console.log(error.message);
+        self.snackBar.open("No se pudo obtener la información de los jugadores", "Cerrar", {
+          duration: 4000,
+          verticalPosition: 'bottom',
+          horizontalPosition: 'right',
+          panelClass: ['red-snackbar']
+        });
+        self.enviando = false;
       })
   }
 
@@ -235,7 +249,8 @@ export class EdicionjugadorComponent implements OnInit {
   }
 
   ParamPlayer(lid) {
-    this.selectedplayer = "Sí";
+    
+    this.enviando = true;
     //let option = String(event.target.value).split('-');
 
     //this.selectedvalue = this.playerService.getJugador(Number(lid));
@@ -259,10 +274,19 @@ export class EdicionjugadorComponent implements OnInit {
         self.lposicion = datos.posicion;
 
         self.seleccion = self.lid + " - " + self.lnombre;
-
+        this.enviando = false;
+        this.selectedplayer = "Sí";
       })
       .catch(function (error) {
+        var self = this;
         console.log(error.message);
+        self.snackBar.open("No se pudo obtener la información de los jugadores", "Cerrar", {
+          duration: 4000,
+          verticalPosition: 'bottom',
+          horizontalPosition: 'right',
+          panelClass: ['red-snackbar']
+        });
+        this.enviando = false;
       })
 
   }

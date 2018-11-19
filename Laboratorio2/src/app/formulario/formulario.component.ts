@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, Validators } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { PlayersService } from '../players.service';
-import { MatSnackBar } from '@angular/material/snack-bar'; 
+import { MatSnackBar } from '@angular/material/snack-bar';
+import {MatProgressBarModule} from '@angular/material/progress-bar'; 
 
 @Component({
   selector: 'app-formulario',
@@ -24,7 +25,13 @@ export class FormularioComponent implements OnInit {
 
   };
 
+  ddPos = "Posición de Juego";
+  ddAt = "Atrapa";
+  ddBa = "Batea";
+
   ddvalor = "";
+
+  enviando: boolean;
 
   posiciones = ["Primera Base", "Segunda Base", "Tercera Base", "Shortstop", "Right Fielder", 
   "Center Fielder", "Left Fielder", "Receptor", "Lanzador"];
@@ -32,6 +39,7 @@ export class FormularioComponent implements OnInit {
   ValoresAtrapa = ["Derecho", "Zurdo", "Ambidiestro"];
 
   constructor(private playerService: PlayersService, public snackBar: MatSnackBar) { 
+    this.enviando = false;
   }
 
   ngOnInit() {
@@ -52,6 +60,7 @@ export class FormularioComponent implements OnInit {
   }
 
   GuardarJugador(){
+    this.enviando = true;
     this.newplayer.id = Math.round(Math.random() * 10000); //Se le genera un nuevo id al nuevo jugador. 
     
     console.log(this.newplayer.nombre);
@@ -60,7 +69,7 @@ export class FormularioComponent implements OnInit {
     this.playerService.insertarJugador(this.newplayer.id, this.newplayer)
     .then((insertado) => {
       var self = this;
-      
+      self.enviando = false;
       self.snackBar.open("Jugador Almacenado con éxito", "Cerrar", {
         duration: 4000,
         verticalPosition: 'bottom',
@@ -71,6 +80,7 @@ export class FormularioComponent implements OnInit {
     .catch(
       (error) => {
         var self = this; 
+        self.enviando = false;
         self.snackBar.open("No se pudo almacenar el nuevo jugador. Ha ocurrido un error", "Cerrar", {
           duration: 4000,
           verticalPosition: 'bottom',

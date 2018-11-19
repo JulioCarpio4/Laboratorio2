@@ -44,7 +44,7 @@ export class PlayersService {
 
   obtenerJugadores(){
     return new Promise((resolve, reject) => {
-      var resultado = axios.get('http://localhost:3001/api/v1/jugadores')
+      var resultado = axios.get('http://prograwebbackend2.westus.azurecontainer.io:3001/api/v1/jugadores')
       if (resultado)
       {
         resolve(resultado);
@@ -59,7 +59,7 @@ export class PlayersService {
 
   obtenerJugador(id){
     return new Promise((resolve, reject) =>{
-      var resultado = axios.get('http://localhost:3001/api/v1/jugadores/' + id)
+      var resultado = axios.get('http://prograwebbackend2.westus.azurecontainer.io:3001/api/v1/jugadores/' + id)
       if (resultado)
       {
         resolve(resultado);
@@ -74,7 +74,7 @@ export class PlayersService {
 
   eliminarJugador(id){
     return new Promise((resolve, reject) =>{
-      var resultado = axios.delete('http://localhost:3001/api/v1/jugadores/' + id)
+      var resultado = axios.delete('http://prograwebbackend2.westus.azurecontainer.io:3001/api/v1/jugadores/' + id)
       if (resultado)
       {
         resolve(resultado);
@@ -90,7 +90,7 @@ export class PlayersService {
   insertarJugador(id, newPlayer){
 
     return new Promise((resolve, reject) => {
-      var resultado = axios.post('http://localhost:3001/api/v1/jugadores', 
+      var resultado = axios.post('http://prograwebbackend2.westus.azurecontainer.io:3001/api/v1/jugadores', 
       { id: newPlayer.id, 
         nombre: newPlayer.nombre,
         jersey: newPlayer.jersey,
@@ -116,7 +116,7 @@ export class PlayersService {
 
   actualizarJugador(id, newPlayer){
     return new Promise((resolve, reject) => {
-      var resultado = axios.put('http://localhost:3001/api/v1/jugadores/' + id, 
+      var resultado = axios.put('http://prograwebbackend2.westus.azurecontainer.io:3001/api/v1/jugadores/' + id, 
       { id: newPlayer.id, 
         nombre: newPlayer.nombre,
         jersey: newPlayer.jersey,

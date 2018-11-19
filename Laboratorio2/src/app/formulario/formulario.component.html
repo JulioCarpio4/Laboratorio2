@@ -1,3 +1,11 @@
+<mat-progress-bar
+          class="example-margin"
+          color="primary"
+          mode="indeterminate"
+          *ngIf = "enviando === true"
+          >
+</mat-progress-bar>
+
 <div class="container my-5">
     <div class="container my-5">
         <h2>
@@ -53,7 +61,7 @@
             </div>
             <div class="form-group col-md-4">
                 <label for="Posición"><b>Posición de Juego:</b></label>
-                <select class="form-control" (change)="SelectOption($event);" required [(ngModel)]="ddValor" name="dropdown">
+                <select class="form-control" (change)="SelectOption($event);" [(ngModel)] ="ddPos" required name="dropdown">
                     <option [ngValue]="undefined" disabled selected>Posición de Juego</option>
                     <option *ngFor="let position of posiciones">{{position}}</option>                    
                 </select>
@@ -63,7 +71,7 @@
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label for="Atrapa"><b>Atrapa:</b></label>
-                <select class="form-control" (change)="CambioAtrapa($event);" required [(ngModel)]="ddAtrapa" name="dropdownA">
+                <select class="form-control" (change)="CambioAtrapa($event);" [(ngModel)] ="ddAt" required name="dropdownA">
                         <option [ngValue]="undefined" disabled selected>Atrapa</option>
                     <option *ngFor="let v_atrapa of ValoresAtrapa">{{v_atrapa}}</option>
                 </select>
@@ -71,7 +79,7 @@
 
             <div class="form-group col-md-4">
                 <label for="Batea"><b>Batea:</b></label>
-                <select class="form-control" (change)="CambioBatea($event);" required [(ngModel)]="ddBatea" name="dropdownB">
+                <select class="form-control" (change)="CambioBatea($event);" [(ngModel)] ="ddBa" required name="dropdownB">
                         <option [ngValue]="undefined" disabled selected>Batea</option>
                     <option *ngFor="let v_atrapa of ValoresAtrapa">{{v_atrapa}}</option>
                 </select>

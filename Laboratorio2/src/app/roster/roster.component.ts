@@ -22,16 +22,19 @@ export class RosterComponent implements OnInit {
 
   selectedRowIndex: number = -1;
 
+  enviando: boolean;
+
   constructor(private playerService: PlayersService, public snackBar: MatSnackBar, private router: Router) {
+    this.enviando = true;
   }
 
   ngOnInit() {
     this.getJugadores();
-    
+    this.enviando = true;
   }
 
   getJugadores(): void{
-
+    this.enviando = true;
     this.playerService.obtenerJugadores()
     .then(
      (recibidos) => {
@@ -64,9 +67,19 @@ export class RosterComponent implements OnInit {
       }
       self.ListaJugadores = listado;
       self.dataSource = listado; 
+      self.enviando = false;
     })
-    .catch(function (error){
-      console.log(error.message);
+    .catch((error) => {
+      var self = this;
+
+      self.snackBar.open("Error al intentar obtener jugadores", "Cerrar", {
+        duration: 3000,
+        verticalPosition: 'bottom',
+        horizontalPosition: 'right',
+        panelClass: ['red-snackbar']
+      });
+
+      self.enviando = false;
     })
 
   }

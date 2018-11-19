@@ -1,4 +1,12 @@
-<div class="container my-5">
+<mat-progress-bar
+          class="example-margin"
+          color="primary"
+          mode="indeterminate"
+          *ngIf = "enviando === true"
+          >
+</mat-progress-bar>
+
+<div class="container my-5" *ngIf = "enviando === false">
     <div class="card">
         <div class="card-header bg-primary text-white">
             <h3>Edición de Jugadores</h3>
